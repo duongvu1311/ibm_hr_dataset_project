@@ -19,7 +19,9 @@ Dive into current available HR metrics to reduce the attrition rate and improve 
 * Point out key factors that drive employee performance 
 
 ### Tools using:
-Spreadsheet, SQL, Tableau
+* Spreadsheet
+* SQL
+* Tableau
 
 ### Deliverables:
 Conclusion on key findings and recommendations
