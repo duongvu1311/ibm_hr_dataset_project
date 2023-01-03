@@ -48,3 +48,30 @@ INNER JOIN ag
 ON m.EmployeeNumber = ag.EmployeeNumber
 GROUP BY m.Attrition, ag.Age_group
 ORDER BY percent_by_age DESC
+
+--Attrition by Monthly Income
+WITH sub1 AS --average income per job level for each department
+(SELECT
+  Department,
+  JobLevel,
+  ROUND(AVG(MonthlyIncome),1) AS avg_income
+FROM `hr-project-2022.ibm_hr_dataset.employees` 
+GROUP BY Department, JobLevel),
+
+sub2 AS --average attrition income
+(SELECT
+  Department,
+  JobLevel,
+  ROUND(AVG(MonthlyIncome),1) AS attrition_avg_income
+FROM `hr-project-2022.ibm_hr_dataset.employees`
+WHERE Attrition = true
+GROUP BY Department, JobLevel)
+
+--show avg_income, attrition_avg_income and their difference
+SELECT 
+  *,
+  ROUND(sub2.attrition_avg_income - sub1.avg_income,1) AS difference
+FROM sub1
+INNER JOIN sub2
+USING(Department, JobLevel)
+ORDER BY Department, JobLevel
