@@ -5,7 +5,6 @@ SELECT
 FROM `hr-project-2022.ibm_hr_dataset.employees` 
 GROUP BY Attrition
 
-
 --Attrition by Gender
 SELECT
   Attrition,
@@ -15,7 +14,6 @@ SELECT
 FROM `hr-project-2022.ibm_hr_dataset.employees` 
 GROUP BY Attrition, Gender
 ORDER BY Attrition_by_gender
-
 
 --Attrition by Department
 SELECT
