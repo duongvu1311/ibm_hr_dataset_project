@@ -66,6 +66,7 @@ WHERE Attrition = true
 GROUP BY Department, JobLevel)
 
 --show avg_income, attrition_avg_income and their difference
+--to test whether employees left because they were underpaid?
 SELECT 
   *,
   ROUND(sub2.attrition_avg_income - sub1.avg_income,1) AS difference
@@ -73,3 +74,17 @@ FROM sub1
 INNER JOIN sub2
 USING(Department, JobLevel)
 ORDER BY Department, JobLevel
+
+--Attrition by Years at company
+SELECT 
+  CASE WHEN YearsAtCompany<2 THEN 'New Hires'
+        WHEN YearsAtCompany <=5 THEN '2-5 years'
+        WHEN YearsAtCompany <=10 THEN '6-10 years'
+        WHEN YearsAtCompany <=20 THEN '11-20 years'
+        ELSE 'Over 20 years' END AS tenure_years,
+  COUNT(*) AS num,
+  ROUND(100.0 * COUNT(*)/SUM(COUNT(*)) OVER(),1) AS percent --percent per total attrition 
+FROM `hr-project-2022.ibm_hr_dataset.employees` 
+WHERE attrition = true
+GROUP BY tenure_years
+ORDER BY percent DESC
