@@ -112,4 +112,34 @@ ORDER BY Age_group, JobLevel
 
 In this result, employees over 50 at job level 1 and 2 account for 39.3% of the total attrition in that age group, while in age group 40-50, the number is only 22.5%.
 
+### 3. Employees with higher pay:
+In the previous part, the top employees with higher than average pay that still leave are:
+
+Department | Job Level | $ higher than monthly average
+--- | --- | ---
+HR | 3 | $593 
+R&D | 5 | $331.5 
+Sales | 5 | $246.5
+
+I will check on the Job Involvement, Job Satisfaction, Environment Satisfaction, and Training Time Last Year factors.
+```sql
+WITH filter AS --create subdata for the targeted employees
+(SELECT *
+FROM `hr-project-2022.ibm_hr_dataset.employees` 
+WHERE Attrition = true AND
+      ((JobLevel = 3 AND Department = 'Human Resources') OR
+      ((JobLevel = 5 AND Department = 'Sales') OR (JobLevel = 5 AND Department = 'Research & Development')))
+)
+SELECT
+      JobLevel,
+      CASE WHEN (JobSatisfaction <3 OR JobInvolvement <3) THEN 'true' ELSE 'false' END AS job_unsatisfied,
+      CASE WHEN EnvironmentSatisfaction <3 THEN 'true' ELSE 'false' END AS env_unsatisfied,
+      TrainingTimesLastYear
+FROM filter
+ORDER BY JobLevel
+```
+![Screenshot-2023-01-04-at-5-39-29-PM.png](https://i.postimg.cc/tgvPC8Pf/Screenshot-2023-01-04-at-5-39-29-PM.png)
+
+* For HR-level 3 employees: they left because they were both unsatisfied with the job and environment. Besides, their training times were less than the average (2.56 for HR Dept as in the previous result)
+* For level 5 employees: they left mostly due to job dissatisfaction. 
 
