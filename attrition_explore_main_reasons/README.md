@@ -59,4 +59,56 @@ Therefore, the reasons behind high attrition rate in Sales and HR Department are
 * Not enough training received
 
 ### 2. Employees over 50 years old 
+For this question, I will examine whether job level plays any role in employees attrition for the two age groups: Over 50, and 40-50
+```sql
+WITH ag AS --employees by age group
+(SELECT  
+CASE WHEN Age<30 THEN 'Under 30'
+       WHEN Age<40 THEN '30 - 40'
+       WHEN Age<50 THEN '40 - 50'
+  ELSE 'Over 50' END AS Age_group,
+*
+FROM `hr-project-2022.ibm_hr_dataset.employees`),
+
+ag_attrition AS --attrition with an age group
+(SELECT * FROM ag
+WHERE Attrition = true),
+
+sub1 AS -- >=40 age group by job level subdata
+(SELECT
+  ag.Age_group,
+  m.JobLevel,
+  COUNT(*) AS num_by_level,
+FROM `hr-project-2022.ibm_hr_dataset.employees` AS m
+INNER JOIN ag
+ON m.EmployeeNumber = ag.EmployeeNumber
+WHERE ag.Age_group IN ('40 - 50', 'Over 50')
+GROUP BY Age_group, JobLevel
+ORDER BY Age_group, JobLevel),
+
+sub2 AS --attrition by >=40 age group and job level
+(SELECT
+  ag_attrition.Age_group,
+  m.JobLevel,
+  COUNT(*) AS num_attrition,
+FROM `hr-project-2022.ibm_hr_dataset.employees` AS m
+INNER JOIN ag_attrition
+ON m.EmployeeNumber = ag_attrition.EmployeeNumber
+WHERE ag_attrition.Age_group IN ('40 - 50', 'Over 50')
+GROUP BY Age_group, JobLevel
+ORDER BY Age_group, JobLevel)
+
+--Calculate the attrition percentage by job level within the 40-50 and Over 50 age groups
+SELECT
+  *,
+  ROUND(100.0 * num_attrition / num_by_level,1) AS percent_attrition
+FROM sub1
+LEFT JOIN sub2
+USING(Age_group, JobLevel)
+ORDER BY Age_group, JobLevel
+```
+![Screenshot-2023-01-04-at-4-05-57-PM.png](https://i.postimg.cc/zD7QJmNq/Screenshot-2023-01-04-at-4-05-57-PM.png)
+
+In this result, employees over 50 at job level 1 and 2 account for 39.3% of the total attrition in that age group, while in age group 40-50, the number is only 22.5%.
+
 
