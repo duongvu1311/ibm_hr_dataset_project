@@ -110,7 +110,7 @@ ORDER BY Department, JobLevel
 ![Screenshot-2023-01-04-at-12-34-22-PM.png](https://i.postimg.cc/zD6x9Y4V/Screenshot-2023-01-04-at-12-34-22-PM.png) 
 
 So overall, most of the employees left because they are underpaid compared to the average salary for that job level within their department.
-However, both job level 2 and 5 in R&D and Sales, as well as job level 3 in HR, are paid slightly more than the average, yet they still left. We will discuss this further in the next Exploration part.
+However, both job level 2 and 5 in R&D and Sales, as well as job level 3 in HR, are paid higher than the average, yet they still left. We will discuss this further in the next Exploration part.
 
 ### 6. Attrition by Years At Company
 ```sql
@@ -130,3 +130,7 @@ ORDER BY percent DESC
 ![Screenshot-2023-01-04-at-12-47-36-PM.png](https://i.postimg.cc/2yWj2fLP/Screenshot-2023-01-04-at-12-47-36-PM.png)
 
 Employees who worked under 5 years at the company tend to leave the most, make up for 68.3% in total attrition.
+
+### 7. Data Visualization
+
+[HR Dashboard](https://public.tableau.com/views/hr_viz/Dashboard1?:language=en-US&:display_count=n&:origin=viz_share_link)
