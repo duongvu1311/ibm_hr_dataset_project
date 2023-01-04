@@ -1,9 +1,9 @@
 
 ## Explore Attrition main reasons
 In the previous part, as we dived into the company attrition overview, we came up with a few questions that need further analysis to find the root cause behind it. They are:
-* Why Sales and HR Department have attrition rate higher than the average?
-* Why more people over 50 years old leave the company than people who aged 40-50?
-* Why people with higher pay still leave the company?
+* Why do Sales and HR Department have attrition rate higher than the average?
+* Why do more people over 50 years old leave the company than people who aged 40-50?
+* Why do people with higher pay still leave the company?
 * Which factors drive employees who work at company less than 5 years to leave?
 Now, let's break down each question and examine other related contributors to find out the answer.
 
