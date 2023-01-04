@@ -5,6 +5,7 @@ In the previous part, as we dived into the company attrition overview, we came u
 * Why do more people over 50 years old leave the company than people who aged 40-50?
 * Why do people with higher pay still leave the company?
 * Which factors drive employees who work at company less than 5 years to leave?
+
 Now, let's break down each question and examine other related contributors to find out the answer.
 
 ### 1. Sales and HR Department:
