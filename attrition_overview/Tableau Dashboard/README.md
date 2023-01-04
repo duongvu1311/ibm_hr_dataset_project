@@ -1,4 +1,6 @@
 ## HR Dashboard
 By using Tableau, I created an interactive dashboard that summarizes the attrition within the organization. 
-Please click on the link below to view on public Tableau, or you can view in the PDF file that I uploaded.
-Link: https://public.tableau.com/views/hr_viz/Dashboard1?:language=en-US&:display_count=n&:origin=viz_share_link
+You can view the dashboard in 2 ways:
+* [Public Tableau](https://public.tableau.com/app/profile/duong.vu6014/viz/hr_viz/Dashboard1)
+* Uploaded image in this folder
+
