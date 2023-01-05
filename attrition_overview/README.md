@@ -17,7 +17,7 @@ GROUP BY Attrition
 ```
 ![Screenshot-2023-01-04-at-10-37-20-AM.png](https://i.postimg.cc/76wxBD6J/Screenshot-2023-01-04-at-10-37-20-AM.png)
 
-The attrition rate of this company is 16.1%
+The attrition rate of this company is **16.1%**
 
 ### 2. Attrition by Gender
 ```sql
@@ -76,7 +76,7 @@ ORDER BY percent_by_age DESC
 ![Screenshot-2023-01-04-at-11-02-06-AM.png](https://i.postimg.cc/BvLjHJzT/Screenshot-2023-01-04-at-11-02-06-AM.png)
 
 * Employees who are under 30 years old have the highest attrition rate (27.91%)
-* Employees over 50 years old tend to leave more than those who are 40-50 years old, which is strange. Do they leave because of retirement or any other root causes behind? We will explore this further in the next _Attrition Explore_ part.
+* Employees over 50 years old (13.29% of that age group) tend to leave more than those who are 40-50 years old (9.74%), which is strange. Do they leave because of retirement or any other root causes behind? We will explore this further in the next _Attrition Explore_ part.
 
 ### 5. Attrition by Monthly Income 
 ```sql
