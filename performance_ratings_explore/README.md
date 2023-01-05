@@ -7,7 +7,7 @@ So I decided to calculate the percentage of each result to the total answers.
 
 ![Screenshot-2023-01-05-at-7-25-57-PM.png](https://i.postimg.cc/d1Ks7cM0/Screenshot-2023-01-05-at-7-25-57-PM.png)
 
-It turned out that score 3 consists of nearly 85% of the data, resulting in imbalanced data sample.
+It turned out that score 3 consists of nearly 85% of the data, indicating an imbalanced data sample.
 
 With that in mind, I tried to run a multiple regression to test the correlations.
 The explanatory variables that I chose are: 
