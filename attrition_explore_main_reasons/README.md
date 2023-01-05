@@ -1,65 +1,14 @@
 
 ## Explore Attrition main reasons
 In the previous part, as we dived into the company attrition overview, we came up with a few questions that need further analysis to find the root cause behind it. They are:
-* Why do Sales and HR Department have attrition rate higher than the average?
 * Why do more people over 50 years old leave the company than people who aged 40-50?
 * Why do people with higher pay still leave the company?
 * Which factors drive employees who work at company less than 5 years to leave?
 
 Now, let's break down each question and examine other related contributors to find out the answer.
 
-### 1. Sales and HR Department:
-**Hypothesis**: _Do employees in Sales and HR leave because they often need to work overtime, to have Business Travel or they do not have enough training for the job?_
 
-Let's find out!
-
-First, we will examine the Business Travel and Overtime factors.
-```sql
-SELECT
-  Department,
-  SUM(CASE WHEN BusinessTravel = 'Travel_Frequently' OR BusinessTravel = 'Travel_Rarely' THEN 1 ELSE 0 END) AS count_business_travel,
-  SUM(CASE WHEN OverTime = true THEN 1 ELSE 0 END) AS count_overtime,
-  SUM(COUNT(*)) OVER(PARTITION BY Department) AS count_attrition_by_department
-FROM `hr-project-2022.ibm_hr_dataset.employees`
-WHERE Attrition = true AND
-      (Department = 'Human Resources' OR Department = 'Sales') 
-GROUP BY Department  
-```
-![Screenshot-2023-01-04-at-3-07-35-PM.png](https://i.postimg.cc/sDMGNKLc/Screenshot-2023-01-04-at-3-07-35-PM.png)
-
-So most of the leaving employees had to have business travel (both rarely and frequently), while around 50% of them had to work overtime often. 
-
-Next, we will see the average training times last year for the resigned employees.
-```sql
-SELECT 
-  Department, JobLevel, 
-  ROUND(AVG(TrainingTimesLastYear),2) AS avg_training_by_level,
-FROM `hr-project-2022.ibm_hr_dataset.employees`
-WHERE Attrition = true AND
-      (Department = 'Human Resources' OR Department = 'Sales')
-GROUP BY Department, JobLevel
-ORDER BY Department, JobLevel
-```
-![Screenshot-2023-01-04-at-3-21-54-PM.png](https://i.postimg.cc/hvVDkCkJ/Screenshot-2023-01-04-at-3-21-54-PM.png)
-
-Now, if we compare the above results to the average training times by each department:
-```sql
-SELECT
-  Department, 
-  ROUND(AVG(TrainingTimesLastYear),2) AS avg_training_by_department
-FROM `hr-project-2022.ibm_hr_dataset.employees`
-WHERE (Department = 'Human Resources' OR Department = 'Sales')
-GROUP BY Department
-```
-![Screenshot-2023-01-04-at-3-26-51-PM.png](https://i.postimg.cc/C5CZGLL6/Screenshot-2023-01-04-at-3-26-51-PM.png)
-
-It's true that all of the leaving employees received less training times than the average training of their department, especially those employees who are in Human Resources at level 3.
-
-Therefore, the reasons behind high attrition rate in Sales and HR Department are due to:
-* Job requires Business Travel and Overtime
-* Not enough training received
-
-### 2. Employees over 50 years old 
+### 1. Employees over 50 years old 
 For this question, I will examine whether job level plays any role in employees attrition for the two age groups: Over 50, and 40-50
 ```sql
 WITH ag AS --employees by age group
@@ -112,7 +61,7 @@ ORDER BY Age_group, JobLevel
 
 In this result, employees over 50 at job level 1 and 2 account for 39.3% of the total attrition in that age group, while in age group 40-50, the number is only 22.5%.
 
-### 3. Employees with higher pay:
+### 2. Employees with higher pay:
 In the previous part, the top employees with higher than average pay that still leave are:
 
 Department | Job Level | $ higher than monthly average
@@ -143,3 +92,64 @@ ORDER BY JobLevel
 * For HR-level 3 employees: they left because they were both unsatisfied with the job and environment. Besides, their training times were less than the average (2.56 for HR Dept as in the previous result)
 * For level 5 employees: they left mostly due to job dissatisfaction. 
 
+### 3. Employees with YearsAtCompany <=5
+In this part, I will check their Satisfaction on the job, environment, relationship, as well as the average years that they stayed at their previous companies.
+
+First, I will count how many of those employees left with Low Satisfaction on the three areas.
+```sql 
+SELECT 
+  SUM(CASE WHEN JobSatisfaction=1 THEN 1 ELSE 0 END) AS job_unsatisfied,
+  SUM(CASE WHEN EnvironmentSatisfaction=1 THEN 1 ELSE 0 END) AS env_unsatisfied,
+  SUM(CASE WHEN RelationshipSatisfaction=1 THEN 1 ELSE 0 END) AS rela_unsatisfied
+FROM `hr-project-2022.ibm_hr_dataset.employees` 
+WHERE YearsAtCompany <=5 AND Attrition =true
+```
+![Screenshot-2023-01-05-at-11-08-57-AM.png](https://i.postimg.cc/GpxSkjFP/Screenshot-2023-01-05-at-11-08-57-AM.png)
+
+We can easily see that **environment dissatisfaction** has the highest vote.
+
+Next, I will check the average years that these employees stayed at their previous companies and compare it to the average of the whole company.
+```sql
+WITH sub AS --create a subdata that calculate the average years per previous company
+(SELECT 
+  *,
+  CASE WHEN NumCompaniesWorked = 0 THEN TotalWorkingYears ELSE TotalWorkingYears/ NumCompaniesWorked END AS years_per_company 
+--if that employee never worked at any company before, then years_per_company = total_working_years
+FROM `hr-project-2022.ibm_hr_dataset.employees`)
+
+SELECT
+  Attrition,
+  ROUND(AVG(sub.years_per_company),1) AS avg_years
+FROM `hr-project-2022.ibm_hr_dataset.employees` AS main
+INNER JOIN sub
+USING(Attrition)
+GROUP BY Attrition
+```
+![Screenshot-2023-01-05-at-11-32-03-AM.png](https://i.postimg.cc/QtH67Z05/Screenshot-2023-01-05-at-11-32-03-AM.png)
+
+_So the average years of **total attrition ones** are **4.2**_
+
+Now, let's see the number for the ones who stay less than 5 years. I will just use the same queries and add another filter for YearsAtCompany.
+
+```sql
+WITH sub AS --create a subdata that calculate the average years per previous company (for YearsAtCompany <=5 years)
+(SELECT 
+  *,
+  CASE WHEN NumCompaniesWorked = 0 THEN TotalWorkingYears ELSE TotalWorkingYears/ NumCompaniesWorked END AS years_per_company 
+--if that employee never worked at any company before, then years_per_company = total_working_years
+FROM `hr-project-2022.ibm_hr_dataset.employees`
+WHERE YearsAtCompany <=5)
+
+SELECT
+  Attrition,
+  ROUND(AVG(sub.years_per_company),1) AS avg_years
+FROM `hr-project-2022.ibm_hr_dataset.employees` AS main
+INNER JOIN sub
+USING(Attrition)
+GROUP BY Attrition
+```
+![Screenshot-2023-01-05-at-11-41-14-AM.png](https://i.postimg.cc/MKF1cfgs/Screenshot-2023-01-05-at-11-41-14-AM.png)
+
+So the attrition ones, who left after 5 years or less at current company, have the average **2.2 years** at previous employers. This number is a big difference compared to the total 4.2. 
+
+_Overall, employees who worked less than or equal to 5 years in this company left with Low Satisfaction of the environment, and in their work history, they also have low average years (2.2) per company._
