@@ -28,8 +28,8 @@ Public dataset can be downloaded on:
 https://www.kaggle.com/datasets/pavansubhasht/ibm-hr-analytics-attrition-dataset
 
 ### Table of Contents
-* [Attrition Overview & Visualization](https://github.com/duongvu1311/ibm_hr_dataset_project/tree/main/attrition_overview)
-* [Explore attrition main reasons](https://github.com/duongvu1311/ibm_hr_dataset_project/tree/main/attrition_explore_main_reasons)
-* [Explore Performance Ratings](https://github.com/duongvu1311/ibm_hr_dataset_project/tree/main/performance_ratings_explore)
-* [Conclusions, Recommendations and Limitations](https://github.com/duongvu1311/ibm_hr_dataset_project/tree/main/conclusion_recommendations_limitations)
+* [1. Attrition Overview & Visualization](https://github.com/duongvu1311/ibm_hr_dataset_project/tree/main/attrition_overview)
+* [2. Explore attrition main reasons](https://github.com/duongvu1311/ibm_hr_dataset_project/tree/main/attrition_explore_main_reasons)
+* [3. Explore Performance Ratings](https://github.com/duongvu1311/ibm_hr_dataset_project/tree/main/performance_ratings_explore)
+* [4. Conclusions, Recommendations and Limitations](https://github.com/duongvu1311/ibm_hr_dataset_project/tree/main/conclusion_recommendations_limitations)
 
