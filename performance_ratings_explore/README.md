@@ -31,5 +31,5 @@ So Performance Rating has:
 
 Or put it another way, for example, _if Education increase by 1 score, Performance Rating will increase by 0.0015. And if Work Life Balance increase by 1 score, Performance Rating will decrease by 0.0089._
 
-We can see that all the coefficients are so small that there is no significant difference that can affect Performance Rating. The fact that 3 scores outnumber in the original dataset may be the main cause to this problem.
+We can see that all the coefficients are so small that there is no significant difference that can affect Performance Rating. The fact that score 3 outnumbers 4 in the original dataset may be the main cause to this problem.
 
