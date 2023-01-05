@@ -30,6 +30,6 @@ https://www.kaggle.com/datasets/pavansubhasht/ibm-hr-analytics-attrition-dataset
 ### Table of Contents
 * [Attrition Overview & Visualization](https://github.com/duongvu1311/ibm_hr_dataset_project/tree/main/attrition_overview)
 * [Explore attrition main reasons](https://github.com/duongvu1311/ibm_hr_dataset_project/tree/main/attrition_explore_main_reasons)
-* [Explore Performance Ratings]
+* [Explore Performance Ratings](https://github.com/duongvu1311/ibm_hr_dataset_project/tree/main/performance_ratings_explore)
 * [Conclusions and recommendations](https://github.com/duongvu1311/ibm_hr_dataset_project/tree/main/conclusion_recommendations_limitations)
 
