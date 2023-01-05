@@ -89,7 +89,17 @@ ORDER BY JobLevel
 ```
 ![Screenshot-2023-01-04-at-5-39-29-PM.png](https://i.postimg.cc/tgvPC8Pf/Screenshot-2023-01-04-at-5-39-29-PM.png)
 
-* For HR-level 3 employees: they left because they were both unsatisfied with the job and environment. Besides, their training times were less than the average (2.56 for HR Dept as in the previous result)
+In order to compare the training times easily, here are the average training times last year per department:
+```sql
+SELECT
+  Department, 
+  ROUND(AVG(TrainingTimesLastYear),2) AS avg_training_by_department
+FROM `hr-project-2022.ibm_hr_dataset.employees`
+GROUP BY Department
+```
+![Screenshot-2023-01-05-at-6-59-06-PM.png](https://i.postimg.cc/FHzLTNkn/Screenshot-2023-01-05-at-6-59-06-PM.png)
+
+* For HR-level 3 employees: they left because they were both unsatisfied with the job and environment. Besides, their training times were less than the average (2.56 for HR Dept)
 * For level 5 employees: they left mostly due to job dissatisfaction. 
 
 ### 3. Employees with YearsAtCompany <=5
